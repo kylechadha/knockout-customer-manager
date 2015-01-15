@@ -1,5 +1,5 @@
 {
-  "name": "fresh-tomatoes",
+  "name": "knockout-customer-manager",
   "main": "server.js",
   "private": "true",
   "dependencies": {
@@ -7,9 +7,7 @@
     "morgan": "~1.0.0",
     "body-parser": "~1.0.0",
     "method-override": "~1.0.0",
-    "bower": "latest",
-    "request": "latest",
-    "cheerio": "latest"
+    "bower": "latest"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
