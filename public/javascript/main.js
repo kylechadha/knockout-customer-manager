@@ -12,15 +12,19 @@ function CustomerViewModel() {
 
     // Client-side routes    
     Sammy(function() {
-        this.get('folder', function() {
-            console.log('Heyy /folder');
+        this.get('customers', function() {
+            console.log('Customers route');
             // self.chosenFolderId(this.params.folder);
             // self.chosenMailData(null);
             // $.get("/mail", { folder: this.params.folder }, self.chosenFolderData);
         });
 
-        this.get('box', function() {
-            console.log('Heyy /box');
+        this.get('orders', function() {
+            console.log('Orders route');
+        });
+
+        this.get('orders/:customerId', function() {
+            console.log('Customer order route');
         });
     
         this.get('');
