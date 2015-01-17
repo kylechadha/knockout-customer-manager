@@ -31,14 +31,16 @@
   <!-- Content -->
   <div class="container-fluid">
 
+    <!-- Welcome View -->
     <div class="welcome jumbotron">
       <h1>KO Customer Manager</h1>
       <p>Welcome to the Knockout Customer Manager.</p><br>
       <p><a class="btn btn-primary btn-lg" data-bind="click: goToCustomers">Get Started</a></p>
     </div>
 
+    <!-- Customers View -->
     <div class="customers">
-      <h1>Customers</h1>
+      <h2>Customers</h2>
 
       <table class="table table-striped">
           <tr>
@@ -49,16 +51,38 @@
               <th>Orders</th>
               <th>&nbsp;</th>
           </tr>
-          <tbody data-bind="foreach: customerData">
+          <tbody data-bind="foreach: customers">
             <tr>
                 <td data-bind="text: name"></td>
                 <td data-bind="text: city"></td>
                 <td data-bind="text: orderTotal"></td>
                 <td data-bind="text: joined"></td>
-                <td><a href="#/orders/{{ cust.id }}">View Orders</a></td>
+                <td><a href="" data-bind="click: $root.goToOrder">View Orders</a></td>
                 <td class="center"><span class="glyphicon glyphicon-remove delete"></span></td>
             </tr>
           </tbody>
+      </table>
+    </div>
+
+    <!-- Orders View -->
+    <div class="orders">
+      <h2>Customer Orders</h2>
+      <br /><br />
+      <table class="table">
+          <tr>
+              <th>Product</th>
+              <th>Total</th>
+          </tr>
+          <tbody data-bind="foreach: orders">
+            <tr>
+                <td data-bind="text: product"></td>
+                <td data-bind="text: total"></td>
+            </tr>
+          </tbody>
+          <tr>
+              <td>&nbsp;</td>
+              <td data-bind="text: ordersTotal"></td>
+          </tr>
       </table>
     </div>
 
