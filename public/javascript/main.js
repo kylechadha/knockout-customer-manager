@@ -45,7 +45,7 @@
 function CustomerViewModel() {
     // Data
     var self = this;
-    self.customers = ko.observable();
+    self.customers = ko.observableArray();
     self.orders = ko.observableArray();
     self.customerOrder = ko.observable();
     self.ordersTotal = ko.observable();
@@ -54,6 +54,22 @@ function CustomerViewModel() {
     self.goToCustomers = function() { location.hash = 'customers' };
     self.goToOrders = function() { location.hash = 'orders' };
     self.goToOrder = function(order) { location.hash = 'orders/' + order.id}
+    self.deleteCustomer = function(customer) {
+        $.ajax({
+            url: '/api/customers/' + customer.id,
+            type: 'DELETE',
+            success: function(data) {
+                for (var i = 0, length = self.customers().length; i < length; i++) {
+                    console.log(self.customers()[i].id);
+                    console.log(customer.id);
+                    if (self.customers()[i].id === customer.id) {
+                        self.customers.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        });
+    }
 
     var calculateTotal = function() {
         var total = 0;
