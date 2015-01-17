@@ -18,14 +18,50 @@
   <!-- Header -->
   <nav class="navbar navbar-fresh">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-fire"></span> Customer Manager</a>
+      <a class="navbar-brand" href="/">Customer Manager</a>
+    </div>
+    <div>
+      <ul class="nav navbar-right navbar-nav">
+        <li><a data-bind="click: goToCustomers">Customers</a></li>
+        <li><a data-bind="click: goToOrders">Orders</a></li>
+      </ul>
     </div>
   </nav>
 
   <!-- Content -->
   <div class="container-fluid">
-    <h1 class="jumbotron">Welcome to the Knockout Customer Manager</h1>
-    <div></div>
+
+    <div class="welcome jumbotron">
+      <h1>KO Customer Manager</h1>
+      <p>Welcome to the Knockout Customer Manager.</p><br>
+      <p><a class="btn btn-primary btn-lg" data-bind="click: goToCustomers">Get Started</a></p>
+    </div>
+
+    <div class="customers">
+      <h1>Customers</h1>
+
+      <table class="table table-striped">
+          <tr>
+              <th>Name</th>
+              <th>City</th>
+              <th>Order Total</th>
+              <th>Joined</th>
+              <th>Orders</th>
+              <th>&nbsp;</th>
+          </tr>
+          <tbody data-bind="foreach: customerData">
+            <tr>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: city"></td>
+                <td data-bind="text: orderTotal"></td>
+                <td data-bind="text: joined"></td>
+                <td><a href="#/orders/{{ cust.id }}">View Orders</a></td>
+                <td class="center"><span class="glyphicon glyphicon-remove delete"></span></td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+
   </div>
     
 
@@ -37,16 +73,6 @@
   <!-- Knockout VM and Routes File -->
   <script src="javascript/main.js"></script>
   <script src="javascript/routes.js"></script>
-
-  <!-- App Config & Routes -->
-  <!-- <script src="modules/app.js"></script> -->
-  <!-- <script src="modules/config/routes.js"></script> -->
-
-  <!-- Controllers -->
-  <!-- <script src="modules/controllers/SearchController.js"></script> -->
-
-  <!-- Services & Factories -->
-  <!-- <script src="modules/factories/searchFactory.js"></script> -->
 
   <!-- Live Reload -->
   <script src="//localhost:35729/livereload.js"></script>

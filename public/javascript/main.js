@@ -1,33 +1,39 @@
 function CustomerViewModel() {
     // Data
     var self = this;
-    self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
-    self.chosenFolderId = ko.observable();
-    self.chosenFolderData = ko.observable();
-    self.chosenMailData = ko.observable();
+    self.customerData = ko.observable();
+    // self.chosenFolderId = ko.observable();
+    // self.chosenMailData = ko.observable();
 
     // Behaviours    
-    self.goToFolder = function(folder) { location.hash = folder };
-    self.goToMail = function(mail) { location.hash = mail.folder + '/' + mail.id };
+    self.goToCustomers = function() { location.hash = 'customers' };
+    self.goToOrders = function() { location.hash = 'orders' };
+    // self.goToMail = function(mail) { location.hash = mail.folder + '/' + mail.id };
 
     // Client-side routes    
     Sammy(function() {
-        this.get('customers', function() {
+        this.get('#customers', function() {
             console.log('Customers route');
-            // self.chosenFolderId(this.params.folder);
-            // self.chosenMailData(null);
-            // $.get("/mail", { folder: this.params.folder }, self.chosenFolderData);
+
+            $('.welcome').hide();
+            $('.customers').show();
+
+            $.get("/api/customers", self.customerData);
         });
 
-        this.get('orders', function() {
+        this.get('#orders', function() {
             console.log('Orders route');
         });
 
-        this.get('orders/:customerId', function() {
+        this.get('#orders/:customerId', function() {
             console.log('Customer order route');
+            // $.get("/customers", { folder: this.params.folder }, self.chosenFolderData);
         });
     
-        this.get('');
+        this.get('', function() {
+            $('.welcome').show();
+            $('.customers').hide();
+        });
     }).run();    
 };
 
