@@ -21,9 +21,9 @@
       <a class="navbar-brand" href="/">Customer Manager</a>
     </div>
     <div>
-      <ul class="nav navbar-right navbar-nav">
-        <li><a data-bind="click: goToCustomers">Customers</a></li>
-        <li><a data-bind="click: goToOrders">Orders</a></li>
+      <ul class="nav navbar-right navbar-nav" style="margin-right: 20px">
+        <li><a class="navbar-link" data-bind="click: goToCustomers">Customers</a></li>
+        <li><a class="navbar-link" data-bind="click: goToOrders">Orders</a></li>
       </ul>
     </div>
   </nav>
@@ -58,7 +58,7 @@
                 <td data-bind="text: orderTotal"></td>
                 <td data-bind="text: joined"></td>
                 <td><a href="" data-bind="click: $root.goToOrder">View Orders</a></td>
-                <td class="center"><span class="glyphicon glyphicon-remove delete"></span></td>
+                <td class="center"><span href="" data-bind="click: $root.deleteCustomer" class="glyphicon glyphicon-remove delete"></span></td>
             </tr>
           </tbody>
       </table>
@@ -81,8 +81,25 @@
           </tbody>
           <tr>
               <td>&nbsp;</td>
-              <td data-bind="text: ordersTotal"></td>
+              <td data-bind="text: ordersTotal, currency: price"></td>
           </tr>
+      </table>
+    </div>
+
+    <!-- Customer Order View -->
+    <div class="customerOrder" data-bind="with: customerOrder">
+      <h2><span data-bind="text: name"></span>'s Orders</h2>
+      <table class="table table-stiped">
+        <tr>
+          <th>Product</th>
+          <th>Total</th>
+        </tr>
+        <tbody data-bind="foreach: orders">
+          <tr>
+            <td data-bind="text: product"></td>
+            <td data-bind="text: total"></td>
+          </tr>
+        </tbody>
       </table>
     </div>
 

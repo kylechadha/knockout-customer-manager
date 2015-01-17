@@ -1,15 +1,46 @@
-ko.bindingHandlers.currency = {
-    symbol: ko.observable('$'),
-    update: function(element, valueAccessor, allBindingsAccessor){
-        return ko.bindingHandlers.text.update(element,function(){
-            var value = +(ko.utils.unwrapObservable(valueAccessor()) || 0),
-                symbol = ko.utils.unwrapObservable(allBindingsAccessor().symbol === undefined
-                            ? allBindingsAccessor().symbol
-                            : ko.bindingHandlers.currency.symbol);
-            return symbol + value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+(function(){
+    var format = function(value) {
+        toks = value.toFixed(2).replace('-', '').split('.');
+        var display = '$' + $.map(toks[0].split('').reverse(), function(elm, i) {
+            return [(i % 3 === 0 && i > 0 ? ',' : ''), elm];
+        }).reverse().join('') + '.' + toks[1];
+
+        return value < 0 ? '-' + display : display;
+    };
+
+    ko.subscribable.fn.money = function() {
+        var target = this;
+        
+        var writeTarget = function(value) {
+            var stripped=value.replace(/[^0-9.-]/g, '');
+            
+            target(parseFloat(stripped));
+        };
+        
+        var result = ko.computed({
+            read: function() {
+                return target();
+            },
+            write: writeTarget
         });
-    }
-};
+
+        result.formatted = ko.computed({
+            read: function() {
+                if (target()) {
+                    return format(target());
+                }
+            },
+            write: writeTarget
+        });
+        
+        result.isNegative = ko.computed(function(){
+            return target()<0;
+        });
+
+        return result;
+    };
+})();
+
 
 function CustomerViewModel() {
     // Data
@@ -26,7 +57,6 @@ function CustomerViewModel() {
 
     var calculateTotal = function() {
         var total = 0;
-        console.log(self.orders());
         for (var i=0,len=self.orders().length;i<len;i++) {
             total += self.orders()[i].total;
         }
@@ -69,7 +99,7 @@ function CustomerViewModel() {
             $('.orders').hide();
             $('.customerOrder').show();
 
-            // $.get("/customers", { folder: this.params.folder }, self.chosenFolderData);
+            $.get("api/customers/" + this.params.customerId, self.customerOrder);
         });
     
         this.get('', function() {
